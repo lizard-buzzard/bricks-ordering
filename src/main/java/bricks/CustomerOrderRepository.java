@@ -6,11 +6,11 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "order", path = "order")
+@RepositoryRestResource(collectionResourceRel = "order", path = "CreateOrder")
 public interface CustomerOrderRepository extends PagingAndSortingRepository<CustomerOrder, Long> {
 
     List<CustomerOrder> findByorderSpec(@Param("name") String name);
 
-    List<CustomerOrder> findById(@Param("id") long id);
+    List<CustomerOrder> findByBricks(@Param("num") int num);
 
 }
