@@ -10,9 +10,9 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertFalse;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Stage 1
@@ -46,12 +46,12 @@ public class RestClientSubmitNewOrdersTest {
     @Test
     public void orderReferenceIsReturned() throws Exception {
         mockMvc.perform(
-                post("/order")
+                post("/CreateOrder")
                         .content("{\"bricks\": \"15\", \"orderSpec\": \"xxxxxxxx\"}")
         ).andExpect(
                 status().isCreated()
         ).andExpect(
-                header().string("Location", equalTo("http://localhost/order/1"))
+                header().string("Location", equalTo("http://localhost/CreateOrder/1"))
         );
     }
 
@@ -66,11 +66,11 @@ public class RestClientSubmitNewOrdersTest {
     @Test
     public void orderReferenceIsUnique() throws Exception {
         MvcResult mvcResult1 = mockMvc.perform(
-                post("/order").content("{\"bricks\": \"15\", \"orderSpec\": \"xxxxxxxx\"}")
+                post("/CreateOrder").content("{\"bricks\": \"15\", \"orderSpec\": \"xxxxxxxx\"}")
         ).andExpect(status().isCreated()).andReturn();
 
         MvcResult mvcResult2 = mockMvc.perform(
-                post("/order").content("{\"bricks\": \"17\", \"orderSpec\": \"yyyyyyyy\"}")
+                post("/CreateOrder").content("{\"bricks\": \"17\", \"orderSpec\": \"yyyyyyyy\"}")
         ).andExpect(status().isCreated()).andReturn();
 
         String location1 = mvcResult1.getResponse().getHeader("Location");
