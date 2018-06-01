@@ -15,9 +15,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RepositoryRestResource(collectionResourceRel = "CustomerOrder", path = "order")
 public interface CustomerOrderRepository extends BaseRepository<CustomerOrder, Long> {
 
+    Optional<CustomerOrder> findById(Long id);
+
     // TODO: findBricksById to /GetOrder
-//    @RequestMapping(value = "/GetOrder", method = GET)
-//    @ResponseBody
+    //    @RequestMapping(value = "/GetOrder", method = GET)
+    //    @ResponseBody
     @Query("SELECT o FROM CustomerOrder o where o.id = :id")
     CustomerOrder findBricksById(@Param("id") Long id);
 
@@ -29,6 +31,9 @@ public interface CustomerOrderRepository extends BaseRepository<CustomerOrder, L
     @Query("SELECT o FROM CustomerOrder o where o.bricks = :num")
     List<CustomerOrder> findByBricks(@Param("num") int num);
 
-    Optional<CustomerOrder> findById(Long id);
+
+    @Query("SELECT o FROM CustomerOrder o")
+    List<CustomerOrder> findAll();
+
 
 }
