@@ -8,9 +8,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,14 +50,13 @@ public class RestClientSubmitNewOrdersTest {
      */
     @Test
     public void orderReferenceIsReturned() throws Exception {
-        mockMvc.perform(
-                post("/CreateOrder")
-                        .content("{\"bricks\": \"15\", \"orderSpec\": \"xxxxxxxx\"}")
+        MvcResult result = mockMvc.perform(
+                post("/order").content("{\"bricks\": \"15\"}")
         ).andExpect(
                 status().isCreated()
         ).andExpect(
-                header().string("Location", equalTo("http://localhost/CreateOrder/1"))
-        );
+                header().string("Location", startsWith("http://localhost/order/"))
+        ).andDo(print()).andReturn();
     }
 
     /**
@@ -66,16 +70,17 @@ public class RestClientSubmitNewOrdersTest {
     @Test
     public void orderReferenceIsUnique() throws Exception {
         MvcResult mvcResult1 = mockMvc.perform(
-                post("/CreateOrder").content("{\"bricks\": \"15\", \"orderSpec\": \"xxxxxxxx\"}")
+                post("/order").content("{\"bricks\": \"15\"}")
         ).andExpect(status().isCreated()).andReturn();
 
         MvcResult mvcResult2 = mockMvc.perform(
-                post("/CreateOrder").content("{\"bricks\": \"17\", \"orderSpec\": \"yyyyyyyy\"}")
+                post("/order").content("{\"bricks\": \"17\"}")
         ).andExpect(status().isCreated()).andReturn();
 
         String location1 = mvcResult1.getResponse().getHeader("Location");
         String location2 = mvcResult2.getResponse().getHeader("Location");
 
         assertFalse(location1.equals(location2));
+
     }
 }

@@ -1,31 +1,24 @@
 package bricks;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * A domain object
  */
 @Entity
-public class CustomerOrder {
+@Table(name="CustomerOrder")
+public class CustomerOrder implements Serializable {
 
     // The order details contains the CustomerOrder reference and the number of bricks ordered
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;    // CustomerOrder reference is unique to the submission
 
+    @Column(name="bricks", nullable = false/*, columnDefinition = "int default 0"*/)
     private int bricks; // number of bricks in the CustomerOrder
-    private String orderSpec;
-
-    public String getOrderSpec() {
-        return orderSpec;
-    }
-
-    public void setOrderSpec(String orderSpec) {
-        this.orderSpec = orderSpec;
-    }
 
     public int getBricks() {
         return bricks;
