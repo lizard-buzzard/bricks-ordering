@@ -31,7 +31,48 @@ public class RestClientRetriveOrdersTest {
     private MockMvc mockMvc;
 
     /**
-     * First method for retrieving a valid Order reference
+     * Test on "GetOrder" - a primary method for retrieving a valid Order reference
+     * request has a form of http://localhost:9000/order/search/GetOrder?id=2
+     * Use case:
+     * When
+     * A "Get Order" request is submitted with a valid Order reference
+     * Then
+     * The order details are returned
+     * And
+     * The order details contains the Order reference and the number of bricks ordered
+     * When
+     * A "Get Order" request is submitted with an invalid Order reference
+     * Then
+     * No order details are returned
+     *
+     * @throws Exception
+     */
+    @Test
+    public void retrieveOrderDetailsForValidOrderReference2() throws Exception {
+        MvcResult result = mockMvc.perform(
+                post("/order").content("{\"bricks\": \"555\"}")
+        ).andExpect(status().isCreated()).andReturn();
+
+        String loc = result.getResponse().getHeader("Location");
+        String orderNumber = loc.substring(loc.lastIndexOf("/") + 1);
+
+        // valid order reference
+        mockMvc.perform(
+                get("/order/search/GetOrder?id={id}", orderNumber))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.bricks").value("555"))
+                .andExpect(jsonPath("$._links.customerOrder.href").value("http://localhost/order/" + orderNumber));
+
+        // invalid order reference
+        mockMvc.perform(
+                get("/order/search/GetOrder?id={id}", orderNumber+"4567"))
+                .andExpect(status().isNotFound());
+    }
+
+    /**
+     * Test on second (auxiliary) method for retrieving a valid Order reference
+     * request has a form of http://localhost:9000/order/2
+     * Use case:
      * When
      * A "Get Order" request is submitted with a valid Order reference
      * Then
@@ -73,40 +114,5 @@ public class RestClientRetriveOrdersTest {
         mockMvc.perform(get(invalidOrderReference)).andExpect(status().isNotFound());
     }
 
-    /**
-     * Second method for retrieving a valid Order reference
-     * When
-     * A "Get Order" request is submitted with a valid Order reference
-     * Then
-     * The order details are returned
-     * And
-     * The order details contains the Order reference and the number of bricks ordered
-     * When
-     * A "Get Order" request is submitted with an invalid Order reference
-     * Then
-     * No order details are returned
-     *
-     * @throws Exception
-     */
-    @Test
-    public void retrieveOrderDetailsForValidOrderReference2() throws Exception {
-        MvcResult result = mockMvc.perform(
-                post("/order").content("{\"bricks\": \"555\"}")
-        ).andExpect(status().isCreated()).andReturn();
 
-        String loc = result.getResponse().getHeader("Location");
-        String orderNumber = loc.substring(loc.lastIndexOf("/") + 1);
-
-        // valid order reference
-        mockMvc.perform(
-                get("/order/search/findBricksById?id={id}", orderNumber))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.bricks").value("555"))
-                .andExpect(jsonPath("$._links.customerOrder.href").value("http://localhost/order/" + orderNumber));
-
-        // invalid order reference
-        mockMvc.perform(
-                get("/order/search/findBricksById?id={id}", orderNumber+"4567"))
-                .andExpect(status().isNotFound());
-    }
 }

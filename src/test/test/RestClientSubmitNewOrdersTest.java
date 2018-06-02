@@ -41,6 +41,7 @@ public class RestClientSubmitNewOrdersTest {
     }
 
     /**
+     * Use case:
      * When
      * A "Create Order" request for a number of bricks is submitted
      * Then
@@ -60,6 +61,7 @@ public class RestClientSubmitNewOrdersTest {
     }
 
     /**
+     * Use case:
      * When
      * A "Create Order" request for a number of bricks is submitted
      * Then
@@ -81,6 +83,5 @@ public class RestClientSubmitNewOrdersTest {
         String location2 = mvcResult2.getResponse().getHeader("Location");
 
         assertFalse(location1.equals(location2));
-
     }
 }

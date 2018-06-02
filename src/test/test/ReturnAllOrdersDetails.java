@@ -23,8 +23,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Stage 1
+ * Use case:
  * Given
  * Many customers have submitted orders for bricks
+ * When
+ * A "Get Orders" request is submitted
+ * Then
+ * All the orders details are returned
+ * And
+ * The order details contains the Order reference and the number of bricks ordered
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -52,6 +59,7 @@ public class ReturnAllOrdersDetails {
     }
 
     /**
+     * Test on "Get Orders" request which has a form of "http://localhost:9000/order/search/GetOrders"
      * Then
      * All the orders details are returned
      * And
@@ -62,7 +70,7 @@ public class ReturnAllOrdersDetails {
     @Test
     public void returnAllOrdersDetails() throws Exception {
         MvcResult result = mockMvc.perform(
-                get("/order/search/findAll"))
+                get("/order/search/GetOrders"))
                 .andExpect(status().isOk())
 //                .andDo(print())
                 .andReturn();
@@ -85,6 +93,5 @@ public class ReturnAllOrdersDetails {
                     );
                 });
     }
-
 
 }
