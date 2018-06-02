@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import utills.Utils;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -46,14 +47,10 @@ public class ReturnAllOrdersDetails {
      */
     @Before
     public void simulateManyCustomerOrdersSubmission() throws Exception {
-        Random r = new Random();
-        int min = 100;
-        int max = 1000;
 
         for (int i = 0; i < 20; i++) {
             mockMvc.perform(
-                    post("/order")
-                            .content(String.format("{\"bricks\": \"%s\"}", r.nextInt((max - min) + 1) + min))
+                    post("/order").content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
             ).andExpect(status().isCreated());
         }
     }

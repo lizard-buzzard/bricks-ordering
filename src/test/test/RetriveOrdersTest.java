@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
 @AutoConfigureMockMvc
-public class RestClientRetriveOrdersTest {
+public class RetriveOrdersTest {
 
 //    @LocalServerPort
 //    private int port;

@@ -8,14 +8,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
-public class RestClientSubmitNewOrdersTest {
+public class SubmitNewOrdersTest {
 
     @Autowired
     private MockMvc mockMvc;

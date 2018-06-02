@@ -1,9 +1,11 @@
 package bricks;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,14 @@ public interface CustomerOrderRepository extends BaseRepository<CustomerOrder, L
     @Query("SELECT o FROM CustomerOrder o")
     List<CustomerOrder> findAll();
 
+
+    @RestResource(path = "/UpdateOrder")
+    @Modifying
+    @Query("UPDATE CustomerOrder o set o.bricks = :bricks where o.id = :id")
+    void setUserInfoById(@Param("id") long id, @Param("bricks") int  bricks );
+
+
+
     /**
      * This method is out of the scope and introduced for test purposes only
      * @param num
@@ -40,4 +50,6 @@ public interface CustomerOrderRepository extends BaseRepository<CustomerOrder, L
      */
     @Query("SELECT o FROM CustomerOrder o where o.bricks = :num")
     List<CustomerOrder> findByBricks(@Param("num") int num);
+
+
 }
