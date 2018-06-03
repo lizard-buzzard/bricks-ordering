@@ -1,85 +1,42 @@
-a simple ordering system for a fictional organisation that sells bricks
+Test steps with java -jar executable by means of curl http requests for Stage 1 and Stage 2
 
-$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"17\",  \"orderSpec\" : \"YYYvvv\" }" http://localhost:9000/order
-HTTP/1.1 201 
-Location: http://localhost:9000/order/1
-Content-Type: application/hal+json;charset=UTF-8
+grig@grig:~$ curl http://localhost:9000/bricks_api/GetOrders
+[]
+
+grig@grig:~$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"7\" }" http://localhost:9000/bricks_api/CreateOrder
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
 Transfer-Encoding: chunked
-Date: Sat, 02 Jun 2018 07:03:48 GMT
+Date: Sun, 03 Jun 2018 09:36:21 GMT
 
-{
-  "bricks" : 17,
-  "_links" : {
-    "self" : {
-      "href" : "http://localhost:9000/order/1"
-    },
-    "customerOrder" : {
-      "href" : "http://localhost:9000/order/1"
-    }
-  }
-}
+{"id":1,"bricks":7}
 
-$curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"22\",  \"orderSpec\" : \"ZZZZZZZfffffff\" }" http://localhost:9000/order
-HTTP/1.1 201 
-Location: http://localhost:9000/order/2
-Content-Type: application/hal+json;charset=UTF-8
+grig@grig:~$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"17\" }" http://localhost:9000/bricks_api/CreateOrder
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
 Transfer-Encoding: chunked
-Date: Sat, 02 Jun 2018 07:03:59 GMT
+Date: Sun, 03 Jun 2018 09:36:35 GMT
 
-{
-  "bricks" : 22,
-  "_links" : {
-    "self" : {
-      "href" : "http://localhost:9000/order/2"
-    },
-    "customerOrder" : {
-      "href" : "http://localhost:9000/order/2"
-    }
-  }
-}
+{"id":2,"bricks":17}
 
-$ curl  http://localhost:9000/order/search/GetOrders
-{
-  "_embedded" : {
-    "CustomerOrder" : [ {
-      "bricks" : 17,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:9000/order/1"
-        },
-        "customerOrder" : {
-          "href" : "http://localhost:9000/order/1"
-        }
-      }
-    }, {
-      "bricks" : 22,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:9000/order/2"
-        },
-        "customerOrder" : {
-          "href" : "http://localhost:9000/order/2"
-        }
-      }
-    } ]
-  },
-  "_links" : {
-    "self" : {
-      "href" : "http://localhost:9000/order/search/GetOrders"
-    }
-  }
-}
+grig@grig:~$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"27\" }" http://localhost:9000/bricks_api/CreateOrder
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 03 Jun 2018 09:36:44 GMT
 
-$ curl  http://localhost:9000/order/search/GetOrder?id=2
-{
-  "bricks" : 22,
-  "_links" : {
-    "self" : {
-      "href" : "http://localhost:9000/order/2"
-    },
-    "customerOrder" : {
-      "href" : "http://localhost:9000/order/2"
-    }
-  }
-}
+{"id":3,"bricks":27}
 
+grig@grig:~$ curl -i -X PUT -H "Content-Type:application/json" -d "{\"id\" : \"2\",  \"bricks\" : \"2277\" }" http://localhost:9000/bricks_api/UpdateOrder/2
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 03 Jun 2018 09:37:04 GMT
+
+{"id":2,"bricks":2277}
+
+grig@grig:~$ curl http://localhost:9000/bricks_api/GetOrders
+[{"id":1,"bricks":7},{"id":2,"bricks":2277},{"id":3,"bricks":27}]
+
+grig@grig:~$ curl http://localhost:9000/bricks_api/GetOrder/2
+{"id":2,"bricks":2277}grig@grig:~$
