@@ -72,7 +72,7 @@ public class UpdateOrderTest {
         // then update the order by other number of bricks
         MvcResult putResult = mockMvc.perform(
                 put("/bricks_api/UpdateOrder/{id}", orderToBeUpdatedId)
-                        .content("{\"bricks\": " + bricksNoToBeUpdated + "}")
+                        .content("{\"bricks\": \"" + bricksNoToBeUpdated + "\"}")
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()).andReturn();

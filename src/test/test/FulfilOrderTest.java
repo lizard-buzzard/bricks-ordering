@@ -111,6 +111,6 @@ public class FulfilOrderTest {
                         .content("{\"isDispatched\": \"" + isDispatched + "\"}")
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isNotFound());
+        ).andExpect(status().isBadRequest());
     }
 }
