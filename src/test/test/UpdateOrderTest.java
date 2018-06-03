@@ -56,11 +56,11 @@ public class UpdateOrderTest {
      * @throws Exception
      */
     @Test
-    public void updateByPostThroughSaveRepositoryMethodTest() throws Exception {
+    public void updateOrderTest() throws Exception {
         String orderToBeUpdatedId = "5";
         String bricksNoToBeUpdated = "555";
 
-        // first, retrieve the order to be updated
+        // first, retrieve the order to be updated to check its attributes before the update
         MvcResult getBeforeUpdateResult = mockMvc.perform(
                 get("/bricks_api/GetOrder/{id}", orderToBeUpdatedId))
                 .andExpect(status().isOk()).andReturn();

@@ -3,6 +3,8 @@ package bricks.controller;
 import bricks.CustomerOrder;
 import bricks.repo.CustomerOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +43,20 @@ public class CustomerOrderController {
         return customerOrderRepository.findById(id);
     }
 
+    @PutMapping("/FulfilOrder/{id}")
+    @ResponseBody
+    public CustomerOrder fulfilOrder(@PathVariable("id") Long id, @RequestBody CustomerOrder customerOrder)
+            throws ResourceNotFoundException {
+//        CustomerOrder order = customerOrderRepository.getOne(id);
+        Optional<CustomerOrder> order = customerOrderRepository.findById(id);
+        if(order.isPresent()) {
+            CustomerOrder o1 = order.get();
+            o1.setIsDispatched(customerOrder.getIsDispatched());
+            return customerOrderRepository.save(o1);
+        } else {
+            throw new ResourceNotFoundException();
+        }
+    }
 
 //    @DeleteMapping("/orders/{id}")
 //    @ResponseBody

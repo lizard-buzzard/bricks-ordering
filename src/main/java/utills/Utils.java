@@ -26,4 +26,9 @@ public class Utils {
         JsonElement je = parser.parse(response);
         return je.getAsJsonObject().get("id").getAsInt();
     }
+
+    public static String getDispatchStatus(String response) {
+        JsonElement je = parser.parse(response);
+        return je.getAsJsonObject().get("isDispatched").getAsString();
+    }
 }
