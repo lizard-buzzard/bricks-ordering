@@ -5,16 +5,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import utills.Utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.Assert.assertNotEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +30,7 @@ public class UpdateOrderTest {
     public void simulateManyCustomerOrdersSubmission() throws Exception {
         for (int i = 0; i < 20; i++) {
             mockMvc.perform(
-                    post("/order").content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
+                    post("/orders").content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
             ).andExpect(status().isCreated());
         }
     }
@@ -44,67 +42,31 @@ public class UpdateOrderTest {
      */
     @Test
     public void updateByPostThroughSaveRepositoryMethodTest() throws Exception {
-        // get order #5
-        MvcResult orderNoFiveResultBeforeUpdate = mockMvc.perform(
-                get("/order/search/GetOrder?id={id}", "5"))
+        String orderToBeUpdatedId = "5";
+        String bricksNoToBeUpdated = "555";
+
+        // first, retrieve the order to be updated
+        MvcResult getBeforeUpdateResult = mockMvc.perform(
+                get("/bricks_api/GetOrder/{id}", orderToBeUpdatedId))
                 .andExpect(status().isOk()).andReturn();
 
-        String contentBeforeUpdate = orderNoFiveResultBeforeUpdate.getResponse().getContentAsString();
+        long bricksNoBeforeUpdate = Utils.getBricks(getBeforeUpdateResult.getResponse().getContentAsString());
 
-        // new number of bricks for update order #5
-        String bricksNumberToBeUpdated = "10000";
+        // then update the order by other number of bricks
+        MvcResult putResult = mockMvc.perform(
+                put("/bricks_api/UpdateOrder/{id}", orderToBeUpdatedId)
+                        .content("{\"bricks\": " + bricksNoToBeUpdated + "}")
+                        .characterEncoding("UTF-8")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk()).andReturn();
 
-        // check that posted number of bricks for order #5 do not equal to 10_000
-        assertThat(Utils.getBricks(contentBeforeUpdate) != Long.parseLong(bricksNumberToBeUpdated));
-
-        // change ordered bricks for order #5 to 10000
-        MvcResult mvcResult2 = mockMvc.perform(
-                post("/order").content("{  \"id\" : \"5\", \"bricks\" : \"" + bricksNumberToBeUpdated + "\" }")
-        ).andExpect(status().isCreated()).andReturn();
-
-        // get order #5 after update
-        MvcResult orderNoFiveResultAfterUpdate = mockMvc.perform(
-                get("/order/search/GetOrder?id={id}", "5"))
+        // finally, retrieve the order after update
+        MvcResult getAfterUpdateResult = mockMvc.perform(
+                get("/bricks_api/GetOrder/{id}", orderToBeUpdatedId))
                 .andExpect(status().isOk()).andReturn();
 
-        String contentAfterUpdate = orderNoFiveResultAfterUpdate.getResponse().getContentAsString();
+        long bricksNoAfterUpdate = Utils.getBricks(getAfterUpdateResult.getResponse().getContentAsString());
 
-        assertEquals(Long.parseLong(bricksNumberToBeUpdated), Utils.getBricks(contentAfterUpdate));
+        assertNotEquals(bricksNoBeforeUpdate, bricksNoAfterUpdate);
     }
-
-    /**
-     * Method checks that POST request change number of bricks for existed order and do not change the order ID
-     *
-     * @throws Exception
-     */
-//    @Test
-//    public void updateByPatchThroughSaveRepositoryMethodTest() throws Exception {
-//        // get order #5
-//        MvcResult orderNoFiveResultBeforeUpdate = mockMvc.perform(
-//                get("/order/search/GetOrder?id={id}", "5"))
-//                .andExpect(status().isOk()).andReturn();
-//
-//        String contentBeforeUpdate = orderNoFiveResultBeforeUpdate.getResponse().getContentAsString();
-//
-//        // new number of bricks for update order #5
-//        String bricksNumberToBeUpdated = "10000";
-//
-//        // check that posted number of bricks for order #5 do not equal to 10_000
-//        assertThat(Utils.getBricks(contentBeforeUpdate) != Long.parseLong(bricksNumberToBeUpdated));
-//
-//        // change ordered bricks for order #5 to 10000
-//        MvcResult mvcResult2 = mockMvc.perform(
-//                patch("/order").content("{  \"id\" : \"5\", \"bricks\" : \"" + bricksNumberToBeUpdated + "\" }")
-//         ).andExpect(status().isCreated()).andReturn();
-//
-//        // get order #5 after update
-//        MvcResult orderNoFiveResultAfterUpdate = mockMvc.perform(
-//                get("/order/search/GetOrder?id={id}", "5"))
-//                .andExpect(status().isOk()).andReturn();
-//
-//        String contentAfterUpdate = orderNoFiveResultAfterUpdate.getResponse().getContentAsString();
-//
-//        assertEquals(Long.parseLong(bricksNumberToBeUpdated), Utils.getBricks(contentAfterUpdate));
-//    }
-
 }

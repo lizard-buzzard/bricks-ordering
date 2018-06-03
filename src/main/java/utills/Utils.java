@@ -21,4 +21,9 @@ public class Utils {
         JsonElement je = parser.parse(response);
         return je.getAsJsonObject().get("bricks").getAsLong();
     }
+
+    public static int getOrderId(String response) {
+        JsonElement je = parser.parse(response);
+        return je.getAsJsonObject().get("id").getAsInt();
+    }
 }
