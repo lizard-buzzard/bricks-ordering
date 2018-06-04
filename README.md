@@ -4,21 +4,27 @@ The task is to create a simple ordering system for a fictional organisation that
 
 The design is guided by the junit tests.
 
-#### Prerequisites
+Prerequisites
+-------------
 To build and run the examples, you must have the following items installed:
 + [JDK 8] (tested on java version "1.8.0_171" Java HotSpot(TM) 64-Bit Server VM, build 25.171-b11)
 + [Apache Maven] (tested on maven version 3.5.2)
 
 The development and junit tests were done in Intellij Idea 2018.1.4 (Community Edition) in Ubuntu 18.04 LTS.
  
-#### Build and install 
+Build and install
+-----------------
 1. Get a copy of the code: git clone https://github.com/lizard-buzzard/bricks-ordering.git
 2. Change into the bricks-ordering directory.
 3. Type: mvn clean package
 4. Copy the JAR file (brick-ordering-0.1.0.jar) from the target directory to the your working directory
-#### Run server 
-java -jar brick-ordering-0.1.0.jar 
-#### Run tests
+
+Run server from command line
+---------------------------
+java -jar brick-ordering-0.1.0.jar
+
+Run tests
+---------
 **First option**
 The mvn goal test makes tests run from command line
 
