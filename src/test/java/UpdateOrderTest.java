@@ -1,4 +1,5 @@
 import bricks.Application;
+import bricks.config.WebConfigUpdateOrderTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,15 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import utills.Utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 /**
  * Stage 2
@@ -33,7 +38,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = WebConfigUpdateOrderTest.class)
 public class UpdateOrderTest {
+
+    @Autowired
+    private WebApplicationContext webAppContext;
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,11 +51,16 @@ public class UpdateOrderTest {
      * Before test start we simulate that Many customers have submitted orders for bricks
      */
     @Before
-    public void simulateManyCustomerOrdersSubmissionTest() throws Exception {
-        for (int i = 0; i < 20; i++) {
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+
+        for (int i = 0; i < 10; i++) {
             mockMvc.perform(
-                    post("/orders").content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
-            ).andExpect(status().isCreated());
+                    post("/bricks_api/CreateOrder")
+                            .content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
+                            .characterEncoding("UTF-8")
+                            .contentType(MediaType.APPLICATION_JSON)
+            ).andExpect(status().isOk());
         }
     }
 

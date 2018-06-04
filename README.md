@@ -10,18 +10,27 @@ To build and run the examples, you must have the following items installed:
 + [Apache Maven] (tested on maven version 3.5.2)
 
 The development and junit tests were done in Intellij Idea 2018.1.4 (Community Edition) in Ubuntu 18.04 LTS.
-
-**WARNING: for the moment junit tests start from IDE only**
-  
+ 
 #### Build and install 
 1. Get a copy of the code: git clone https://github.com/lizard-buzzard/bricks-ordering.git
 2. Change into the bricks-ordering directory.
-3. Type: mvn clean install
+3. Type: mvn clean package
 4. Copy the JAR file (brick-ordering-0.1.0.jar) from the target directory to the your working directory
 #### Run server 
 java -jar brick-ordering-0.1.0.jar 
 #### Run tests
-Test steps with java -jar executable by means of curl http requests (check that curl is installed)
+**First option**
+The mvn goal test makes tests run from command line
+
+mvn clean test
+
+**Second option**
+
+You can start tests in your IDE (for that example Intellij Idea 2018.1.4 (Community Edition) was used as IDE)
+
+**Third option**
+
+Test steps with java -jar executable by means of curl http requests (check that curl is installed).
 + ensure that there is no orders yet by /bricks_api/GetOrders GET call
 
 $ curl http://localhost:8080/bricks_api/GetOrders

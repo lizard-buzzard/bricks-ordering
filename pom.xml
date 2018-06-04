@@ -22,6 +22,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -50,17 +56,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7.2</version>
-                <configuration>
-                    <includes>
-                        <include>src/test/java/*Test.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
