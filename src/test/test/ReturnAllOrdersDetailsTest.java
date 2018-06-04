@@ -5,6 +5,8 @@ import com.google.gson.JsonParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 public class ReturnAllOrdersDetailsTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReturnAllOrdersDetailsTest.class);
 
     @Autowired
     private MockMvc mockMvc;
@@ -82,9 +85,8 @@ public class ReturnAllOrdersDetailsTest {
 
                     String orderId = jo.get("id").getAsString();
                     String bricksInOrder = jo.get("bricks").getAsString();
-                    System.out.println(
-                            String.format("order # %s, bricks in the order %s", orderId, bricksInOrder)
-                    );
+                    
+                    LOGGER.info(String.format("order # %s, bricks in the order %s", orderId, bricksInOrder));
                 });
     }
 
