@@ -3,6 +3,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class ReturnAllOrdersDetailsTest {
      * Before test start we simulate that Many customers have submitted orders for bricks
      */
     @Before
-    public void simulateManyCustomerOrdersSubmission() throws Exception {
+    public void simulateManyCustomerOrdersSubmissionTest() throws Exception {
 
         for (int i = 0; i < 20; i++) {
             mockMvc.perform(
@@ -68,7 +69,7 @@ public class ReturnAllOrdersDetailsTest {
      * @throws Exception
      */
     @Test
-    public void returnAllOrdersDetails() throws Exception {
+    public void returnAllOrdersDetailsTest() throws Exception {
         MvcResult result = mockMvc.perform(
                 get("/bricks_api/GetOrders/"))
                 .andExpect(status().isOk())
@@ -85,7 +86,7 @@ public class ReturnAllOrdersDetailsTest {
 
                     String orderId = jo.get("id").getAsString();
                     String bricksInOrder = jo.get("bricks").getAsString();
-                    
+
                     LOGGER.info(String.format("order # %s, bricks in the order %s", orderId, bricksInOrder));
                 });
     }
@@ -101,8 +102,9 @@ public class ReturnAllOrdersDetailsTest {
      *
      * @throws Exception
      */
+    @Ignore
     @Test
-    public void returnAllOrdersDetailsAuxiliary() throws Exception {
+    public void returnAllOrdersDetailsAuxiliaryTest() throws Exception {
         MvcResult result = mockMvc.perform(
                 get("/orders/"))
                 .andExpect(status().isOk())

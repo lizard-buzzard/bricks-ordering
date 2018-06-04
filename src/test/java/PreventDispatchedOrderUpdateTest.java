@@ -41,7 +41,7 @@ public class PreventDispatchedOrderUpdateTest {
     private MockMvc mockMvc;
 
     @Test
-    public void preventUpdateDispatchedOrder() throws Exception {
+    public void preventUpdateDispatchedOrderTest() throws Exception {
         String originalBricksNoInOrder = "15";
 
         // create order

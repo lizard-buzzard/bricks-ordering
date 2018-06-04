@@ -39,7 +39,7 @@ public class CreateOrderTest {
      * @throws Exception
      */
     @Test
-    public void orderReferenceIsReturned() throws Exception {
+    public void orderReferenceIsReturnedTest() throws Exception {
         MvcResult result = mockMvc.perform(
                 post("/bricks_api/CreateOrder").content("{\"bricks\": \"15\"}")
                         .characterEncoding("UTF-8")

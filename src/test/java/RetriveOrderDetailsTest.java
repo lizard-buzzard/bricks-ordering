@@ -49,7 +49,7 @@ public class RetriveOrderDetailsTest {
      * @throws Exception
      */
     @Test
-    public void retrieveOrderDetails() throws Exception {
+    public void retrieveOrderDetailsTest() throws Exception {
         MvcResult result = mockMvc.perform(
                 post("/bricks_api/CreateOrder")
                         .content("{\"bricks\": \"555\"}")

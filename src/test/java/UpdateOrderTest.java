@@ -42,7 +42,7 @@ public class UpdateOrderTest {
      * Before test start we simulate that Many customers have submitted orders for bricks
      */
     @Before
-    public void simulateManyCustomerOrdersSubmission() throws Exception {
+    public void simulateManyCustomerOrdersSubmissionTest() throws Exception {
         for (int i = 0; i < 20; i++) {
             mockMvc.perform(
                     post("/orders").content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))

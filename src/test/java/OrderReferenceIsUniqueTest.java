@@ -44,7 +44,7 @@ public class OrderReferenceIsUniqueTest {
      * @throws Exception
      */
     @Test
-    public void orderReferenceIsUnique() throws Exception {
+    public void orderReferenceIsUniqueTest() throws Exception {
         MvcResult mvcResult1 = mockMvc.perform(
                 post("/bricks_api/CreateOrder")
                         .content("{\"bricks\": \"15\"}")
