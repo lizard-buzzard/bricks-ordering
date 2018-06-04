@@ -11,7 +11,7 @@ To build and run the examples, you must have the following items installed:
 
 The development and junit tests were done in Intellij Idea 2018.1.4 (Community Edition) in Ubuntu 18.04 LTS.
 
-**WARNING: for the moment junit tests strt from IDE only**
+**WARNING: for the moment junit tests start from IDE only**
   
 #### Build and install 
 1. Get a copy of the code: git clone https://github.com/lizard-buzzard/bricks-ordering.git
