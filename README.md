@@ -9,7 +9,10 @@ To build and run the examples, you must have the following items installed:
 + [JDK 8] (tested on java version "1.8.0_171" Java HotSpot(TM) 64-Bit Server VM, build 25.171-b11)
 + [Apache Maven] (tested on maven version 3.5.2)
 
-The development and junit tests were done in Intellij Idea 2018.1.4 (Community Edition) in Ubuntu 18.04 LTS.  
+The development and junit tests were done in Intellij Idea 2018.1.4 (Community Edition) in Ubuntu 18.04 LTS.
+
+**WARNING: for the moment junit tests strt from IDE only**
+  
 #### Build and install 
 1. Get a copy of the code: git clone https://github.com/lizard-buzzard/bricks-ordering.git
 2. Change into the bricks-ordering directory.
