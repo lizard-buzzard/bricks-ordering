@@ -35,9 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * And
  * The Order reference is unique to the submission
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@AutoConfigureMockMvc
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigUpdateOrderTest.class)
 public class UpdateOrderTest extends AbstractControllerTest {
 

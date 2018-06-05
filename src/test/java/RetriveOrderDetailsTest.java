@@ -26,9 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * I want to retrieve orders
  * So I can display simple customers’ orders
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
-@AutoConfigureMockMvc
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
+//@AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigRetriveOrderDetailsTest.class)
 public class RetriveOrderDetailsTest extends AbstractControllerTest {
 

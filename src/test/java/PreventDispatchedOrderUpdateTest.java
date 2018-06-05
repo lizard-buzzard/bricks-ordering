@@ -39,10 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Then
  * a 400 bad request response is returned
  */
-@RunWith(SpringRunner.class)
-//@WebMvcTest(PreventDispatchedOrderUpdateTest.class)
-@SpringBootTest(classes = Application.class)
-@AutoConfigureMockMvc
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigPreventDispatchedOrderUpdateTest.class)
 public class PreventDispatchedOrderUpdateTest extends AbstractControllerTest {
 

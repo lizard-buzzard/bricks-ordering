@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * I want to submit new orders for bricks
  * So I can start customers’ orders
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
-@AutoConfigureMockMvc
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
+//@AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigCreateOrderTest.class)
 public class CreateOrderTest extends AbstractControllerTest {
 

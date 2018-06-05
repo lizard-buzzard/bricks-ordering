@@ -41,9 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * And
  * The order details contains the Order reference and the number of bricks ordered
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@AutoConfigureMockMvc
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigReturnAllOrdersDetailsTest.class)
 public class ReturnAllOrdersDetailsTest extends AbstractControllerTest {
 
