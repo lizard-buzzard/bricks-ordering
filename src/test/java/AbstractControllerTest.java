@@ -11,9 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public abstract class AbstractControllerTest {
 
-//    @Autowired
-//    public WebApplicationContext webAppContext=getWebAppContext();
-
     @Autowired
     private MockMvc mockMvc;
 

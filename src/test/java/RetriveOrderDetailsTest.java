@@ -38,14 +38,6 @@ public class RetriveOrderDetailsTest extends AbstractControllerTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Before
-//    public void setUp() throws Exception {
-//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
-//    }
-
     @Override
     public WebApplicationContext getWebAppContext() {
         return this.webAppContext;

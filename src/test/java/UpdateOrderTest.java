@@ -57,20 +57,9 @@ public class UpdateOrderTest extends AbstractControllerTest {
      */
     @Before
     public void setUp() throws Exception {
-//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
-//
-//        for (int i = 0; i < 10; i++) {
-//            mockMvc.perform(
-//                    post("/bricks_api/CreateOrder")
-//                            .content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
-//                            .characterEncoding("UTF-8")
-//                            .contentType(MediaType.APPLICATION_JSON)
-//            ).andExpect(status().isOk());
-//        }
 
         mockMvc = MockMvcBuilders.webAppContextSetup(getWebAppContext()).build();
         mockMvc = getTestData();
-
     }
 
     /**
