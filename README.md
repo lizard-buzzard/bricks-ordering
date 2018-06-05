@@ -56,7 +56,7 @@ $ curl -i -X POST -H "Content-Type:application/json" -d "{  \\"bricks\\" : \\"7\
   
   {"id":1,"bricks":7,"isDispatched":"no"}
 
-$ curl -i -X POST -H "Content-Type:application/json" -d "{  \\"bricks\" : \\"17\\" }" http://localhost:8080/bricks_api/CreateOrder
+$ curl -i -X POST -H "Content-Type:application/json" -d "{  \\"bricks\\" : \\"17\\" }" http://localhost:8080/bricks_api/CreateOrder
 
   HTTP/1.1 200 
   
