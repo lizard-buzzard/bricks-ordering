@@ -44,17 +44,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigPreventDispatchedOrderUpdateTest.class)
-public class PreventDispatchedOrderUpdateTest {
+public class PreventDispatchedOrderUpdateTest extends AbstractControllerTest {
 
     @Autowired
     private WebApplicationContext webAppContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Before
+//    public void setUp() throws Exception {
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+//    }
 
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+    @Override
+    public WebApplicationContext getWebAppContext() {
+        return this.webAppContext;
     }
 
     @Test
@@ -62,7 +67,7 @@ public class PreventDispatchedOrderUpdateTest {
         String originalBricksNoInOrder = "15";
 
         // create order
-        MvcResult postResult = mockMvc.perform(
+        MvcResult postResult = getMockMvc().perform(
                 post("/bricks_api/CreateOrder").content("{\"bricks\": \""+originalBricksNoInOrder+"\"}")
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +81,7 @@ public class PreventDispatchedOrderUpdateTest {
         // change order's bricks number to ensure it could be changed
         String bricksNoToBeUpdated = "555";
 
-        MvcResult putResult = mockMvc.perform(
+        MvcResult putResult = getMockMvc().perform(
                 put("/bricks_api/UpdateOrder/{id}", String.valueOf(orderIdAfterPost))
                         .content("{\"bricks\": \"" + bricksNoToBeUpdated + "\"}")
                         .characterEncoding("UTF-8")
@@ -94,7 +99,7 @@ public class PreventDispatchedOrderUpdateTest {
         // dispatch order
         String isDispatched = "yes";
 
-        MvcResult dispatchResult = mockMvc.perform(
+        MvcResult dispatchResult = getMockMvc().perform(
                 put("/bricks_api/FulfilOrder/{id}", String.valueOf(orderIdAfterUpdate))
                         .content("{\"isDispatched\": \"" + isDispatched + "\"}")
                         .characterEncoding("UTF-8")
@@ -105,7 +110,7 @@ public class PreventDispatchedOrderUpdateTest {
         assertEquals("yes", isDispatchedAfterDispatch);
 
         // try to change already dispatched order
-        mockMvc.perform(
+        getMockMvc().perform(
                 put("/bricks_api/UpdateOrder/{id}", String.valueOf(orderIdAfterUpdate))
                         .content("{\"isDispatched\": \"" + isDispatched + "\"}")
                         .characterEncoding("UTF-8")

@@ -29,18 +29,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigCreateOrderTest.class)
-public class CreateOrderTest {
+public class CreateOrderTest extends AbstractControllerTest {
 
     @Autowired
     private WebApplicationContext webAppContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Before
+//    public void setUp() throws Exception {
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+//    }
 
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+    @Override
+    public WebApplicationContext getWebAppContext() {
+        return this.webAppContext;
     }
+
 
     /**
      * Use case:
@@ -53,7 +59,7 @@ public class CreateOrderTest {
      */
     @Test
     public void orderReferenceIsReturnedTest() throws Exception {
-        MvcResult result = mockMvc.perform(
+        MvcResult result = getMockMvc().perform(
                 post("/bricks_api/CreateOrder").content("{\"bricks\": \"15\"}")
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)

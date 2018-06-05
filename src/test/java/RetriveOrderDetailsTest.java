@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class /*, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT*/)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigRetriveOrderDetailsTest.class)
-public class RetriveOrderDetailsTest {
+public class RetriveOrderDetailsTest extends AbstractControllerTest {
 
 //    @LocalServerPort
 //    private int port;
@@ -38,12 +38,17 @@ public class RetriveOrderDetailsTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Before
+//    public void setUp() throws Exception {
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+//    }
 
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+    @Override
+    public WebApplicationContext getWebAppContext() {
+        return this.webAppContext;
     }
 
     /**
@@ -64,7 +69,7 @@ public class RetriveOrderDetailsTest {
      */
     @Test
     public void retrieveOrderDetailsTest() throws Exception {
-        MvcResult result = mockMvc.perform(
+        MvcResult result = getMockMvc().perform(
                 post("/bricks_api/CreateOrder")
                         .content("{\"bricks\": \"555\"}")
                         .characterEncoding("UTF-8")
@@ -75,14 +80,14 @@ public class RetriveOrderDetailsTest {
         int firstOrderId = Utils.getOrderId(contentResponse);
 
         // valid order reference
-        mockMvc.perform(
+        getMockMvc().perform(
                 get("/bricks_api/GetOrder/{id}", String.valueOf(firstOrderId)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.bricks").value("555"))
                 .andExpect(jsonPath("$.id").value("1"));
 
         // invalid order reference
-        mockMvc.perform(
+        getMockMvc().perform(
                 get("/bricks_api/GetOrder/{id}", "4567"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").doesNotExist());

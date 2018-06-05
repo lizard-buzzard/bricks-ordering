@@ -28,19 +28,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigOrderReferenceIsUniqueTest.class)
-public class OrderReferenceIsUniqueTest {
+public class OrderReferenceIsUniqueTest extends AbstractControllerTest {
 
     @Autowired
     private WebApplicationContext webAppContext;
 
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Before
+//    public void setUp() throws Exception {
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+//    }
 
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+    @Override
+    public WebApplicationContext getWebAppContext() {
+        return this.webAppContext;
     }
-
 //    /**
 //     * Very first test to check for start of a Spring application context
 //     */
@@ -59,14 +63,14 @@ public class OrderReferenceIsUniqueTest {
      */
     @Test
     public void orderReferenceIsUniqueTest() throws Exception {
-        MvcResult mvcResult1 = mockMvc.perform(
+        MvcResult mvcResult1 = getMockMvc().perform(
                 post("/bricks_api/CreateOrder")
                         .content("{\"bricks\": \"15\"}")
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()).andReturn();
 
-        MvcResult mvcResult2 = mockMvc.perform(
+        MvcResult mvcResult2 = getMockMvc().perform(
                 post("/bricks_api/CreateOrder")
                         .content("{\"bricks\": \"17\"}")
                         .characterEncoding("UTF-8")

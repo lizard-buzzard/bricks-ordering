@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigReturnAllOrdersDetailsTest.class)
-public class ReturnAllOrdersDetailsTest {
+public class ReturnAllOrdersDetailsTest extends AbstractControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReturnAllOrdersDetailsTest.class);
 
@@ -55,25 +55,26 @@ public class ReturnAllOrdersDetailsTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+    @Override
+    public WebApplicationContext getWebAppContext() {
+        return this.webAppContext;
     }
 
-    /**
-     * Before test start we simulate that Many customers have submitted orders for bricks
-     */
     @Before
-    public void simulateManyCustomerOrdersSubmissionTest() throws Exception {
+    public void setUp() throws Exception {
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+//
+//        for (int i = 0; i < 10; i++) {
+//            mockMvc.perform(
+//                    post("/bricks_api/CreateOrder")
+//                            .content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
+//                            .characterEncoding("UTF-8")
+//                            .contentType(MediaType.APPLICATION_JSON)
+//            ).andExpect(status().isOk());
+//        }
 
-        for (int i = 0; i < 10; i++) {
-            mockMvc.perform(
-                    post("/bricks_api/CreateOrder")
-                            .content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
-                            .characterEncoding("UTF-8")
-                            .contentType(MediaType.APPLICATION_JSON)
-            ).andExpect(status().isOk());
-        }
+        mockMvc = MockMvcBuilders.webAppContextSetup(getWebAppContext()).build();
+        mockMvc = getTestData();
     }
 
     /**

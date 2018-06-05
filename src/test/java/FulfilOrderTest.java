@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = WebConfigFulfilOrderTest.class)
-public class FulfilOrderTest {
+public class FulfilOrderTest extends AbstractControllerTest {
 
     @Autowired
     private WebApplicationContext webAppContext;
@@ -47,21 +47,30 @@ public class FulfilOrderTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Override
+    public WebApplicationContext getWebAppContext() {
+        return this.webAppContext;
+    }
     /**
      * Before test start we simulate that Many customers have submitted orders for bricks
      */
     @Before
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
 
-        for (int i = 0; i < 10; i++) {
-            mockMvc.perform(
-                    post("/bricks_api/CreateOrder")
-                            .content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
-                            .characterEncoding("UTF-8")
-                            .contentType(MediaType.APPLICATION_JSON)
-            ).andExpect(status().isOk());
-        }
+        mockMvc = MockMvcBuilders.webAppContextSetup(getWebAppContext()).build();
+
+
+//        for (int i = 0; i < 10; i++) {
+//            mockMvc.perform(
+//                    post("/bricks_api/CreateOrder")
+//                            .content(String.format("{\"bricks\": \"%s\"}", Utils.getNextRandom()))
+//                            .characterEncoding("UTF-8")
+//                            .contentType(MediaType.APPLICATION_JSON)
+//            ).andExpect(status().isOk());
+//        }
+
+        mockMvc = getTestData();
     }
 
     /**
