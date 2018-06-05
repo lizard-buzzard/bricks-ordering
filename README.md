@@ -44,7 +44,7 @@ $ curl http://localhost:8080/bricks_api/GetOrders
 []
 + create three orders by /bricks_api/CreateOrder POST call
 
-$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"7\" }" http://localhost:8080/bricks_api/CreateOrder
+$ curl -i -X POST -H "Content-Type:application/json" -d "{  \\"bricks\\" : \\"7\\" }" http://localhost:8080/bricks_api/CreateOrder
 
   HTTP/1.1 200 
   
@@ -56,7 +56,7 @@ $ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"7\" }
   
   {"id":1,"bricks":7,"isDispatched":"no"}
 
-$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"17\" }" http://localhost:8080/bricks_api/CreateOrder
+$ curl -i -X POST -H "Content-Type:application/json" -d "{  \\"bricks\" : \\"17\\" }" http://localhost:8080/bricks_api/CreateOrder
 
   HTTP/1.1 200 
   
@@ -69,7 +69,7 @@ $ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"17\" 
   {"id":2,"bricks":17,"isDispatched":"no"}
  
   
-$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"bricks\" : \"27\" }" http://localhost:8080/bricks_api/CreateOrder
+$ curl -i -X POST -H "Content-Type:application/json" -d "{  \\"bricks\\" : \\"27\\" }" http://localhost:8080/bricks_api/CreateOrder
 
 HTTP/1.1 200 
 
@@ -88,7 +88,7 @@ $ curl http://localhost:8080/bricks_api/GetOrders
 
 + change number of bricks ordered for order #2 by /bricks_api/UpdateOrder/2 PUT call
 
-$ curl -i -X PUT -H "Content-Type:application/json" -d "{\"bricks\" : \"2277\" }" http://localhost:8080/bricks_api/UpdateOrder/2
+$ curl -i -X PUT -H "Content-Type:application/json" -d "{\\"bricks\\" : \\"2277\\" }" http://localhost:8080/bricks_api/UpdateOrder/2
 
 HTTP/1.1 200 
 
@@ -108,7 +108,7 @@ $ curl http://localhost:8080/bricks_api/GetOrder/2
 
 + dispatch the changed order (#2) by /bricks_api/FulfilOrder/2 PUT call
 
-$ curl -i -X PUT -H "Content-Type:application/json" -d "{\"isDispatched\" : \"yes\" }" http://localhost:8080/bricks_api/FulfilOrder/2
+$ curl -i -X PUT -H "Content-Type:application/json" -d "{\\"isDispatched\\" : \\"yes\\" }" http://localhost:8080/bricks_api/FulfilOrder/2
 
 HTTP/1.1 200 
 
@@ -120,23 +120,25 @@ Date: Mon, 04 Jun 2018 06:50:10 GMT
 
 {"id":2,"bricks":2277,"isDispatched":"yes"}
 
-+ try to dispatch an order with an invalid order reference (#123) by /bricks_api/DiapatchOrder/123 call. Ensure that HTTP/1.1 400 is returned
++ try to dispatch an order with an invalid order reference (#123) by /bricks_api/FulfilOrder/123 call. Ensure that HTTP/1.1 400 is returned
 
-$ curl -i -X PUT -H "Content-Type:application/json" -d "{\"isDispatched\" : \"yes\" }" http://localhost:8080/bricks_api/DiapatchOrder/123
+$ curl -i -X PUT -H "Content-Type:application/json" -d "{\\"isDispatched\\" : \\"yes\\" }" http://localhost:8080/bricks_api/FulfilOrder/123
 
-HTTP/1.1 404 
+HTTP/1.1 400 
 
-Content-Type: application/hal+json;charset=UTF-8
+Content-Type: application/json;charset=UTF-8
 
 Transfer-Encoding: chunked
 
-Date: Mon, 04 Jun 2018 07:08:03 GMT
+Date: Tue, 05 Jun 2018 07:07:34 GMT
 
-{"timestamp":"2018-06-04T07:08:03.858+0000","status":404,"error":"Not Found","message":"No message available","path":"/bricks_api/DiapatchOrder/123"} 
+Connection: close
+
+{"timestamp":1528182454588,"status":400,"error":"Bad Request","message":"No message available","path":"/bricks_api/FulfilOrder/123"} 
 
 + try to change the order already dispatched, ensure that HTTP/1.1 400 is returned
 
-$ curl -i -X PUT -H "Content-Type:application/json" -d "{\"bricks\" : \"3377\" }" http://localhost:8080/bricks_api/UpdateOrder/2
+$ curl -i -X PUT -H "Content-Type:application/json" -d "{\\"bricks\" : \\"3377\\" }" http://localhost:8080/bricks_api/UpdateOrder/2
 
 HTTP/1.1 400 
 
